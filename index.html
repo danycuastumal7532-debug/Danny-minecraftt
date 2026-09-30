@@ -1,0 +1,491 @@
+import tkinter as tk
+from tkinter import messagebox
+
+# ==========================================
+# CUESTIONARIO DE MINECRAFT
+# ==========================================
+
+ventana = tk.Tk()
+ventana.title("Cuestionario de Minecraft")
+ventana.geometry("700x600")
+
+# ==========================================
+# VARIABLES
+# ==========================================
+
+pregunta_actual = 0
+puntaje = 0
+
+# ==========================================
+# PREGUNTAS
+# ==========================================
+
+preguntas = [
+
+    # ---------- FÁCIL ----------
+    {
+        "pregunta": "¿Qué criatura explota cuando se acerca al jugador?",
+        "opciones": ["Zombie", "Creeper", "Esqueleto", "Araña"],
+        "respuesta": "Creeper",
+        "dificultad": "FÁCIL",
+        "puntos": 1
+    },
+
+    {
+        "pregunta": "¿Qué herramienta se utiliza para picar piedra?",
+        "opciones": ["Pala", "Pico", "Hacha", "Azada"],
+        "respuesta": "Pico",
+        "dificultad": "FÁCIL",
+        "puntos": 1
+    },
+
+    {
+        "pregunta": "¿Qué animal proporciona lana?",
+        "opciones": ["Vaca", "Cerdo", "Oveja", "Pollo"],
+        "respuesta": "Oveja",
+        "dificultad": "FÁCIL",
+        "puntos": 1
+    },
+
+    {
+        "pregunta": "¿Qué objeto permite dormir?",
+        "opciones": ["Cofre", "Horno", "Cama", "Yunque"],
+        "respuesta": "Cama",
+        "dificultad": "FÁCIL",
+        "puntos": 1
+    },
+
+    {
+        "pregunta": "¿Qué material se utiliza para fabricar una mesa de trabajo?",
+        "opciones": ["Hierro", "Madera", "Diamante", "Oro"],
+        "respuesta": "Madera",
+        "dificultad": "FÁCIL",
+        "puntos": 1
+    },
+
+    # ---------- MEDIA ----------
+    {
+        "pregunta": "¿Qué dimensión se encuentra al entrar en un portal de obsidiana?",
+        "opciones": ["End", "Nether", "Overworld", "Aether"],
+        "respuesta": "Nether",
+        "dificultad": "MEDIA",
+        "puntos": 2
+    },
+
+    {
+        "pregunta": "¿Qué criatura puede soltar varas de Blaze?",
+        "opciones": ["Ghast", "Blaze", "Enderman", "Zombie"],
+        "respuesta": "Blaze",
+        "dificultad": "MEDIA",
+        "puntos": 2
+    },
+
+    {
+        "pregunta": "¿Qué objeto se utiliza para crear ojos de Ender?",
+        "opciones": [
+            "Perla de Ender y polvo de Blaze",
+            "Diamante y oro",
+            "Obsidiana y hierro",
+            "Pólvora y arena"
+        ],
+        "respuesta": "Perla de Ender y polvo de Blaze",
+        "dificultad": "MEDIA",
+        "puntos": 2
+    },
+
+    {
+        "pregunta": "¿Qué criatura puede teletransportarse?",
+        "opciones", [
+            "Zombie",
+            "Enderman",
+            "Vaca",
+            "Esqueleto"
+        ],
+        "respuesta": "Enderman",
+        "dificultad": "MEDIA",
+        "puntos": 2
+    },
+
+    {
+        "pregunta": "¿Cuál de estos materiales es necesario para fabricar un horno?",
+        "opciones": ["Madera", "Piedra", "Diamante", "Obsidiana"],
+        "respuesta": "Piedra",
+        "dificultad": "MEDIA",
+        "puntos": 2
+    },
+
+    # ---------- DIFÍCIL ----------
+    {
+        "pregunta": "¿Qué objeto se utiliza para activar un portal al End?",
+        "opciones": [
+            "Ojo de Ender",
+            "Perla de Ender",
+            "Estrella del Nether",
+            "Cristal del End"
+        ],
+        "respuesta": "Ojo de Ender",
+        "dificultad": "DIFÍCIL",
+        "puntos": 3
+    },
+
+    {
+        "pregunta": "¿Qué jefe aparece al colocar tres cabezas de Wither Skeleton sobre bloques de arena de almas?",
+        "opciones": [
+            "Ender Dragon",
+            "Warden",
+            "Wither",
+            "Ravager"
+        ],
+        "respuesta": "Wither",
+        "dificultad": "DIFÍCIL",
+        "puntos": 3
+    },
+
+    {
+        "pregunta": "¿Qué herramienta se utiliza principalmente para obtener madera?",
+        "opciones": [
+            "Pico",
+            "Pala",
+            "Hacha",
+            "Azada"
+        ],
+        "respuesta": "Hacha",
+        "dificultad": "DIFÍCIL",
+        "puntos": 3
+    },
+
+    {
+        "pregunta": "¿Qué estructura contiene normalmente un portal del End?",
+        "opciones": [
+            "Fortaleza del Nether",
+            "Fortaleza",
+            "Aldea",
+            "Monumento oceánico"
+        ],
+        "respuesta": "Fortaleza",
+        "dificultad": "DIFÍCIL",
+        "puntos": 3
+    },
+
+    {
+        "pregunta": "¿Qué criatura es conocida por ser extremadamente peligrosa y vivir en ciudades antiguas?",
+        "opciones": [
+            "Warden",
+            "Creeper",
+            "Ghast",
+            "Slime"
+        ],
+        "respuesta": "Warden",
+        "dificultad": "DIFÍCIL",
+        "puntos": 3
+    },
+
+    # ---------- MUY DIFÍCIL ----------
+    {
+        "pregunta": "¿Qué objeto se obtiene al derrotar al Wither y se utiliza para fabricar una baliza?",
+        "opciones": [
+            "Estrella del Nether",
+            "Corazón del mar",
+            "Cristal del End",
+            "Perla de Ender"
+        ],
+        "respuesta": "Estrella del Nether",
+        "dificultad": "MUY DIFÍCIL",
+        "puntos": 5
+    },
+
+    {
+        "pregunta": "¿Qué combinación de materiales permite fabricar una baliza?",
+        "opciones": [
+            "Vidrio, obsidiana y estrella del Nether",
+            "Hierro, diamante y cristal del End",
+            "Oro, obsidiana y perla de Ender",
+            "Vidrio, hierro y corazón del mar"
+        ],
+        "respuesta": "Vidrio, obsidiana y estrella del Nether",
+        "dificultad": "MUY DIFÍCIL",
+        "puntos": 5
+    },
+
+    {
+        "pregunta": "¿Qué nivel máximo de encantamiento aparece normalmente como opción de nivel en una mesa de encantamientos con suficientes librerías?",
+        "opciones": [
+            "Nivel 15",
+            "Nivel 20",
+            "Nivel 30",
+            "Nivel 50"
+        ],
+        "respuesta": "Nivel 30",
+        "dificultad": "MUY DIFÍCIL",
+        "puntos": 5
+    },
+
+    {
+        "pregunta": "¿Qué recurso se necesita para fabricar un ojo de Ender además de una perla de Ender?",
+        "opciones": [
+            "Polvo de Blaze",
+            "Pólvora",
+            "Polvo de redstone",
+            "Polvo de hueso"
+        ],
+        "respuesta": "Polvo de Blaze",
+        "dificultad": "MUY DIFÍCIL",
+        "puntos": 5
+    },
+
+    {
+        "pregunta": "¿Qué combinación de elementos se utiliza para fabricar un cohete que puede utilizarse para impulsar el vuelo con élitros?",
+        "opciones": [
+            "Papel y pólvora",
+            "Papel y redstone",
+            "Pólvora y carbón",
+            "Papel y polvo de Blaze"
+        ],
+        "respuesta": "Papel y pólvora",
+        "dificultad": "MUY DIFÍCIL",
+        "puntos": 5
+    }
+]
+
+# ==========================================
+# TÍTULO
+# ==========================================
+
+titulo = tk.Label(
+    ventana,
+    text="CUESTIONARIO DE MINECRAFT",
+    font=("Arial", 22, "bold")
+)
+
+titulo.pack(pady=15)
+
+# ==========================================
+# INFORMACIÓN DE DIFICULTAD
+# ==========================================
+
+nivel = tk.Label(
+    ventana,
+    text="",
+    font=("Arial", 14, "bold")
+)
+
+nivel.pack(pady=5)
+
+# ==========================================
+# TEXTO DE LA PREGUNTA
+# ==========================================
+
+texto_pregunta = tk.Label(
+    ventana,
+    text="",
+    font=("Arial", 14),
+    wraplength=620
+)
+
+texto_pregunta.pack(pady=20)
+
+# ==========================================
+# RESPUESTAS
+# ==========================================
+
+respuesta = tk.StringVar()
+
+botones = []
+
+        font=("Arial", 12),
+        wraplength=550
+    )
+
+    boton.pack(anchor="w", padx=100, pady=5)
+
+    botones.append(boton)
+
+# ==========================================
+# RESULTADO
+# ==========================================
+
+resultado = tk.Label(
+    ventana,
+    text="",
+    font=("Arial", 12)
+)
+
+resultado.pack(pady=10)
+
+# ==========================================
+# MOSTRAR PREGUNTA
+# ==========================================
+
+def mostrar_pregunta():
+
+    pregunta = preguntas[pregunta_actual]
+
+    nivel.config(
+        text=f"Dificultad: {pregunta['dificultad']}   |   "
+             f"Valor: {pregunta['puntos']} puntos"
+    )
+
+    texto_pregunta.config(
+        text=f"Pregunta {pregunta_actual + 1} de {len(preguntas)}\n\n"
+             f"{pregunta['pregunta']}"
+    )
+
+    respuesta.set("")
+
+    for i in range(4):
+
+        botones[i].config(
+            text=pregunta["opciones"][i],
+            value=pregunta["opciones"][i]
+        )
+
+    resultado.config(text="")
+
+
+# ==========================================
+# COMPROBAR RESPUESTA
+# ==========================================
+
+def comprobar():
+
+    global pregunta_actual
+    global puntaje
+
+    seleccion = respuesta.get()
+
+    if seleccion == "":
+        messagebox.showwarning(
+            "Atención",
+            "Selecciona una respuesta."
+        )
+        return
+
+    pregunta = preguntas[pregunta_actual]
+
+    correcta = pregunta["respuesta"]
+
+    if seleccion == correcta:
+
+        puntaje += pregunta["puntos"]
+
+        resultado.config(
+            text=f"¡CORRECTO! +{pregunta['puntos']} puntos"
+        )
+
+    else:
+
+        resultado.config(
+            text=f"Incorrecto. La respuesta era: {correcta}"
+        )
+
+    pregunta_actual += 1
+
+    if pregunta_actual < len(preguntas):
+
+        ventana.after(
+            1200,
+            mostrar_pregunta
+        )
+
+    else:
+
+        ventana.after(
+            1200,
+            finalizar
+        )
+
+
+# ==========================================
+# FINAL DEL CUESTIONARIO
+# ==========================================
+
+def finalizar():
+
+    maximo = sum(
+        pregunta["puntos"]
+        for pregunta in preguntas
+    )
+
+    porcentaje = (puntaje / maximo) * 100
+
+    texto_pregunta.config(
+        text="¡CUESTIONARIO TERMINADO!"
+    )
+
+    nivel.config(
+        text="RESULTADO FINAL"
+    )
+
+    for boton in botones:
+        boton.pack_forget()
+
+    boton_comprobar.pack_forget()
+
+    resultado.config(
+        text=f"Puntaje: {puntaje}/{maximo}\n"
+             f"Porcentaje: {porcentaje:.0f}%"
+    )
+
+    boton_reiniciar.pack(pady=20)
+
+
+# ==========================================
+# REINICIAR
+# ==========================================
+
+def reiniciar():
+
+    global pregunta_actual
+    global puntaje
+
+    pregunta_actual = 0
+    puntaje = 0
+
+    for boton in botones:
+
+        boton.pack(
+            anchor="w",
+            padx=100,
+            pady=5
+        )
+
+    boton_comprobar.pack(pady=20)
+
+    boton_reiniciar.pack_forget()
+
+    mostrar_pregunta()
+
+
+# ==========================================
+# BOTÓN COMPROBAR
+# ==========================================
+
+boton_comprobar = tk.Button(
+    ventana,
+    text="COMPROBAR RESPUESTA",
+    font=("Arial", 12),
+    command=comprobar
+)
+
+boton_comprobar.pack(pady=20)
+
+
+# ==========================================
+# BOTÓN REINICIAR
+# ==========================================
+
+boton_reiniciar = tk.Button(
+    ventana,
+    text="VOLVER A JUGAR",
+    font=("Arial", 12),
+    command=reiniciar
+)
+
+
+# ==========================================
+# INICIAR PROGRAMA
+# ==========================================
+
+mostrar_pregunta()
+
+ventana.mainloop()
